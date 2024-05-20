@@ -58,13 +58,18 @@ stages:
             displayName: 'Deploying to qa'
             condition: and(succeeded(), eq(${{parameters.runtasktqa}}, 'true')) 
   - stage: "PROD"
-    dependsOn: [Build]
+    dependsOn: [QA]
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
-      - job: "Deploy_PROD"
-        steps:
-          - checkout: self
-          - script: echo "Deploying to PROD"
-            displayName: 'Deploying to PROD'
-            condition: and(succeeded(), eq(${{parameters.runtaskprod}}, 'true'))  
+      - deployment:
+        displayName: 'Deploy stage to prod'
+        environment: 'PROD'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - script: echo "Deploying to PROD"
+                  displayName: 'Deploying to PROD'
+                  condition: and(succeeded(), eq(${{parameters.runtaskprod}}, 'true'))
