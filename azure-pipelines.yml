@@ -8,7 +8,16 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-  
+
+parameters:
+  - name: runtask
+    displayName: 'Run task'
+    type: boolean
+    default: false
+
+variables:
+  name: variable-parametro
+  value: ${{ parameters.runtask }}
 
 steps:
 - script: echo Hello, world!
@@ -18,3 +27,4 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
