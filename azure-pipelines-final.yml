@@ -46,3 +46,25 @@ stages:
           - script: echo "Deploying to DEV"
             displayName: 'Deploying to DEV'
             condition: and(succeeded(), eq(${{parameters.runtaskdev}}, 'true'))
+  - stage: "QA"
+    dependsOn: [Build]
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: "Deploy_QA"
+        steps:
+          - checkout: self
+          - script: echo "Deploying to QA"
+            displayName: 'Deploying to qa'
+            condition: and(succeeded(), eq(${{parameters.runtasktqa}}, 'true')) 
+  - stage: "PROD"
+    dependsOn: [Build]
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: "Deploy_PROD"
+        steps:
+          - checkout: self
+          - script: echo "Deploying to PROD"
+            displayName: 'Deploying to PROD'
+            condition: and(succeeded(), eq(${{parameters.runtaskprod}}, 'true'))  
