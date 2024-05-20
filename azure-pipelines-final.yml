@@ -1,0 +1,33 @@
+trigger:
+  - new-pipeline-test
+parameters:
+  - name: runtaskcode
+    type: boolean
+    default: false
+    displayName: "run build stage"
+  - name: runtaskdev
+    type: boolean
+    default: false
+    displayName: "run development deployment"
+  - name: runtasktqa
+    type: boolean
+    default: false
+    displayName: "run qa deployment"
+  - name: runtaskprod
+    type: boolean
+    default: false
+    displayName: "run production deployment"
+
+variables:
+  - name: variable-parametro
+    value: ${{ parameters.runtaskdev}}
+
+
+stages:
+  - stage: "Build"
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+     - job: "Dowlonad code"
+       steps:
+         
