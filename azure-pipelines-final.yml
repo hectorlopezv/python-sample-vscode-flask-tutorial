@@ -28,6 +28,21 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
-     - job: "Dowlonad code"
-       steps:
-         
+      - job: "Download_Code"
+        steps:
+          - task: CmdLine@2
+            inputs:
+              script: | 
+                echo Write your commands here
+                echo Hello world
+  - stage: "DEV"
+    dependsOn: [Build]
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: "Deploy_Dev"
+        steps:
+          - checkout: self
+          - script: echo "Deploying to DEV"
+            displayName: 'Deploying to DEV'
+            condition: and(succeeded(), eq(${{parameters.runtaskdev}}, 'true'))
