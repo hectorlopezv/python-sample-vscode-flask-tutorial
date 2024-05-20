@@ -47,7 +47,7 @@ stages:
             displayName: 'Deploying to DEV'
             condition: and(succeeded(), eq(${{parameters.runtaskdev}}, 'true'))
   - stage: "QA"
-    dependsOn: [Build]
+    dependsOn: [Build, DEV]
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
