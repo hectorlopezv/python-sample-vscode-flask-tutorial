@@ -1,5 +1,5 @@
 trigger:
-  - new-pipeline-test
+  - main
 parameters:
   - name: runtaskcode
     type: boolean
